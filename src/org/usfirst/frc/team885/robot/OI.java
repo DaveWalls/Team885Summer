@@ -1,11 +1,6 @@
 package org.usfirst.frc.team885.robot;
 
-import org.usfirst.frc.team885.robot.commands.CollectorRun;
 import org.usfirst.frc.team885.robot.commands.LifterRun;
-import org.usfirst.frc.team885.robot.commands.LowShooterFeed;
-import org.usfirst.frc.team885.robot.commands.LowShooterShoot;
-import org.usfirst.frc.team885.robot.commands.LowShooterShootSequence;
-import org.usfirst.frc.team885.robot.commands.LowShooterStopped;
 import org.usfirst.frc.team885.robot.commands.ShifterSwitch;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -27,12 +22,6 @@ public class OI {
 	Button shifterSwitchButton = new JoystickButton(driverStick, 1);
 
 	// Operator controls
-	Button feederInButton = new JoystickButton(operatorStick, 8);
-	Button shooterOutButton = new JoystickButton(operatorStick, 7);
-	Button shooterSequenceButton = new JoystickButton(operatorStick, 6);
-	Button collectorToggleButton = new JoystickButton(operatorStick, 2);
-	Button collectorMomentaryButton = new JoystickButton(operatorStick, 5);
-	Button collectorBackwardsButton = new JoystickButton(operatorStick, 4);
 	POVButton lifterUpButton = new POVButton(operatorStick, 0);
 	Button lifterDownButtonA = new JoystickButton(operatorStick, 1);
 	Button lifterDownButtonB = new JoystickButton(operatorStick, 3);
@@ -43,25 +32,6 @@ public class OI {
 
 		// Toggle low/high gear
 		shifterSwitchButton.whenPressed(new ShifterSwitch());
-
-		// Run feeder in (momentary)
-		feederInButton.whileHeld(new LowShooterFeed(1.0));
-
-		// Run feeder, shooter and collector (momentary)
-		shooterSequenceButton.whenPressed(new LowShooterShootSequence(1.0, 1.0, 1.0));
-		shooterSequenceButton.whenReleased(new LowShooterStopped());
-
-		// Run shooter (momentary)
-		shooterOutButton.whileHeld(new LowShooterShoot(1.0));
-
-		// Run collector (momentary)
-		collectorMomentaryButton.whileHeld(new CollectorRun(1.0));
-
-		// Toggle collector on/off
-		collectorToggleButton.toggleWhenPressed(new CollectorRun(1.0));
-
-		// Run collector in reverse (momentary)
-		collectorBackwardsButton.whileHeld(new CollectorRun(-1.0));
 
 		// Run lifter (momentary)
 		lifterUpButton.whileActive(new LifterRun(1.0));

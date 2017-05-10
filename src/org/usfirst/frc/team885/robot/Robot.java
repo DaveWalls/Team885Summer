@@ -4,20 +4,12 @@ import org.usfirst.frc.team885.robot.commandgroups.AutoBaseline;
 import org.usfirst.frc.team885.robot.commandgroups.AutoCenterGear;
 import org.usfirst.frc.team885.robot.commandgroups.AutoDoNothing;
 import org.usfirst.frc.team885.robot.commandgroups.AutoLeftGear;
-import org.usfirst.frc.team885.robot.commandgroups.AutoLeftGearHopperBoiler;
-import org.usfirst.frc.team885.robot.commandgroups.AutoLeftGearLeftBoiler;
-import org.usfirst.frc.team885.robot.commandgroups.AutoLeftHopperBoiler;
 import org.usfirst.frc.team885.robot.commandgroups.AutoRightGear;
-import org.usfirst.frc.team885.robot.commandgroups.AutoRightGearHopperBoiler;
-import org.usfirst.frc.team885.robot.commandgroups.AutoRightGearRightBoiler;
-import org.usfirst.frc.team885.robot.commandgroups.AutoRightHopperBoiler;
 import org.usfirst.frc.team885.robot.commandgroups.TestDrivePIDDistance;
 import org.usfirst.frc.team885.robot.commands.ShifterSetLow;
 import org.usfirst.frc.team885.robot.subsystems.Chassis;
-import org.usfirst.frc.team885.robot.subsystems.Collector;
 import org.usfirst.frc.team885.robot.subsystems.GearCollector;
 import org.usfirst.frc.team885.robot.subsystems.Lifter;
-import org.usfirst.frc.team885.robot.subsystems.LowShooter;
 import org.usfirst.frc.team885.robot.subsystems.Shifter;
 
 import edu.wpi.cscore.UsbCamera;
@@ -40,10 +32,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static Chassis chassis;
-	public static Collector collector;
 	public static GearCollector gearCollector;
 	public static Lifter lifter;
-	public static LowShooter lowShooter;
 	public static Shifter shifter;
 
 	public static OI oi;
@@ -57,10 +47,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		chassis = new Chassis();
-		collector = new Collector();
 		gearCollector = new GearCollector();
 		lifter = new Lifter();
-		lowShooter = new LowShooter();
 		shifter = new Shifter();
 
 		// Camera initialization: 2 cameras streaming to SmartDashboard
@@ -84,12 +72,6 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Drive 5ft PID", new TestDrivePIDDistance());
 		autoChooser.addObject("Right Gear", new AutoRightGear());
 		autoChooser.addObject("Left Gear", new AutoLeftGear());
-		autoChooser.addObject("Right Gear + Shoot Low", new AutoRightGearRightBoiler());
-		autoChooser.addObject("Left Gear + Shoot Low", new AutoLeftGearLeftBoiler());
-		autoChooser.addObject("Right Gear + Trigger Hopper + Shoot", new AutoRightGearHopperBoiler());
-		autoChooser.addObject("Left Gear + Trigger Hopper + Shoot", new AutoLeftGearHopperBoiler());
-		autoChooser.addObject("Right Hopper + Shoot Low", new AutoRightHopperBoiler());
-		autoChooser.addObject("Left Hopper + Shoot Low", new AutoLeftHopperBoiler());
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 
 		SmartDashboard.putData(Scheduler.getInstance());
@@ -99,10 +81,8 @@ public class Robot extends IterativeRobot {
 	// Collects data from subsystems and sends it to the SmartDashboard
 	private void updateDashboard() {
 		chassis.updateDashboard();
-		collector.updateDashboard();
 		gearCollector.updateDashboard();
 		lifter.updateDashboard();
-		lowShooter.updateDashboard();
 		shifter.updateDashboard();
 	}
 
