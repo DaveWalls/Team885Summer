@@ -9,7 +9,7 @@ import org.usfirst.frc.team885.robot.commandgroups.TestDrivePIDDistance;
 import org.usfirst.frc.team885.robot.commands.ShifterSetLow;
 import org.usfirst.frc.team885.robot.subsystems.Chassis;
 import org.usfirst.frc.team885.robot.subsystems.GearCollector;
-import org.usfirst.frc.team885.robot.subsystems.Lifter;
+import org.usfirst.frc.team885.robot.subsystems.Scaler;
 import org.usfirst.frc.team885.robot.subsystems.Shifter;
 
 import edu.wpi.cscore.UsbCamera;
@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 
 	public static Chassis chassis;
 	public static GearCollector gearCollector;
-	public static Lifter lifter;
+	public static Scaler scaler;
 	public static Shifter shifter;
 
 	public static OI oi;
@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		chassis = new Chassis();
 		gearCollector = new GearCollector();
-		lifter = new Lifter();
+		scaler = new Scaler();
 		shifter = new Shifter();
 
 		// Camera initialization: 2 cameras streaming to SmartDashboard
@@ -82,7 +82,7 @@ public class Robot extends IterativeRobot {
 	private void updateDashboard() {
 		chassis.updateDashboard();
 		gearCollector.updateDashboard();
-		lifter.updateDashboard();
+		scaler.updateDashboard();
 		shifter.updateDashboard();
 	}
 

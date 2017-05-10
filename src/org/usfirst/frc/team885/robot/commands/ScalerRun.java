@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LifterRun extends Command {
+public class ScalerRun extends Command {
 	
 	double speed; // Motor output when lifting
 
-    public LifterRun(double speed) {
-        requires(Robot.lifter);
+    public ScalerRun(double speed) {
+        requires(Robot.scaler);
         this.speed = speed;
     }
 
@@ -22,7 +22,7 @@ public class LifterRun extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifter.run(speed);
+    	Robot.scaler.run(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

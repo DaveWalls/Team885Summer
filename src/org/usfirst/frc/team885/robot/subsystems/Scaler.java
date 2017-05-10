@@ -1,7 +1,7 @@
 package org.usfirst.frc.team885.robot.subsystems;
 
 import org.usfirst.frc.team885.robot.RobotMap;
-import org.usfirst.frc.team885.robot.commands.LifterRun;
+import org.usfirst.frc.team885.robot.commands.ScalerRun;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Device to scale rope
  */
-public class Lifter extends Subsystem {
+public class Scaler extends Subsystem {
 
-    private SpeedController motor = new VictorSP(RobotMap.PWM.lifter);
+    private SpeedController motor = new VictorSP(RobotMap.PWM.scaler);
     
-    public Lifter() {
+    public Scaler() {
     	motor.setInverted(true);
     }
     
@@ -29,7 +29,7 @@ public class Lifter extends Subsystem {
     }
 
     public void initDefaultCommand() {
-        setDefaultCommand(new LifterRun(0.0));
+        setDefaultCommand(new ScalerRun(0.0));
     }
 }
 
