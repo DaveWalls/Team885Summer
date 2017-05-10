@@ -1,0 +1,2 @@
+camera:
+http://roborio-885-frc.local:1181/stream.mjpg
