@@ -1,8 +1,7 @@
 package org.usfirst.frc.team885.robot;
 
-import org.usfirst.frc.team885.robot.commands.GearDown;
-import org.usfirst.frc.team885.robot.commands.GearIntakeRun;
-import org.usfirst.frc.team885.robot.commands.GearUp;
+import org.usfirst.frc.team885.robot.commands.GearIn;
+import org.usfirst.frc.team885.robot.commands.GearOut;
 import org.usfirst.frc.team885.robot.commands.ScalerRun;
 import org.usfirst.frc.team885.robot.commands.ShifterSwitch;
 
@@ -27,8 +26,6 @@ public class OI {
 	// Operator controls
 	Button gearUpButton = new JoystickButton(operatorStick, 4);
 	Button gearDownButton = new JoystickButton(operatorStick, 2);
-	Button gearInButton = new JoystickButton(operatorStick, 6);
-	Button gearOutButton = new JoystickButton(operatorStick,8);
 	POVButton lifterUpButton = new POVButton(operatorStick, 0);
 	Button lifterDownButtonA = new JoystickButton(operatorStick, 1);
 	Button lifterDownButtonB = new JoystickButton(operatorStick, 3);
@@ -38,10 +35,8 @@ public class OI {
 		super();
 
 		// Gear collector
-		gearUpButton.whenPressed(new GearUp());
-		gearDownButton.whenPressed(new GearDown());
-		gearInButton.whileHeld(new GearIntakeRun(1.0));
-		gearOutButton.whileHeld(new GearIntakeRun(-1.0));
+		gearUpButton.whenPressed(new GearIn());
+		gearDownButton.whenPressed(new GearOut());
 		
 		// Toggle low/high gear
 		shifterSwitchButton.whenPressed(new ShifterSwitch());

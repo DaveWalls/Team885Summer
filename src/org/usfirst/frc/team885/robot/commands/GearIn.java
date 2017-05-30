@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 /**
  * 
  */
-public class GearUp extends InstantCommand {
+public class GearIn extends InstantCommand {
 
-    public GearUp() {
+    public GearIn() {
         super();
     }
 
     // Called once when the command executes
     protected void initialize() {
-    	Robot.gearCollector.setUp();
+    	Robot.gearCollector.pistonIn();
     }
 
 }
