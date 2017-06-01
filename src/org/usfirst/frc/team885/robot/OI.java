@@ -24,9 +24,9 @@ public class OI {
 	Button shifterSwitchButton = new JoystickButton(driverStick, 1);
 
 	// Operator controls
-	Button gearUpButton = new JoystickButton(operatorStick, 4);
-	Button gearDownButton = new JoystickButton(operatorStick, 2);
-	POVButton lifterUpButton = new POVButton(operatorStick, 0);
+	Button gearOutButton = new JoystickButton(operatorStick, 6);  // right top bumper
+	POVButton lifterUpButtonA = new POVButton(operatorStick, 0);
+	Button lifterUpButtonB = new JoystickButton(operatorStick, 5); // left top bumper
 	Button lifterDownButtonA = new JoystickButton(operatorStick, 1);
 	Button lifterDownButtonB = new JoystickButton(operatorStick, 3);
 	DoubleButton lifterDownButton = new DoubleButton(lifterDownButtonA, lifterDownButtonB);
@@ -35,14 +35,15 @@ public class OI {
 		super();
 
 		// Gear collector
-		gearUpButton.whenPressed(new GearIn());
-		gearDownButton.whenPressed(new GearOut());
+		gearOutButton.whenPressed(new GearOut());
+		gearOutButton.whenReleased(new GearIn());
 		
 		// Toggle low/high gear
 		shifterSwitchButton.whenPressed(new ShifterSwitch());
 
 		// Run lifter (momentary)
-		lifterUpButton.whileActive(new ScalerRun(1.0));
+		lifterUpButtonA.whileActive(new ScalerRun(1.0));
+		lifterUpButtonA.whileActive(new ScalerRun(1.0));
 
 		// Run lifter in reverse (momentary)
 		lifterDownButton.whileActive(new ScalerRun(-0.5));
