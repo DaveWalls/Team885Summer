@@ -22,9 +22,9 @@ public class OI {
 
 	// Driver controls
 	Button shifterSwitchButton = new JoystickButton(driverStick, 1);
+	Button gearOutButton = new JoystickButton(driverStick, 2); // driver thumb button
 
 	// Operator controls
-	Button gearOutButton = new JoystickButton(operatorStick, 6);  // right top bumper
 	POVButton lifterUpButtonA = new POVButton(operatorStick, 0);
 	Button lifterUpButtonB = new JoystickButton(operatorStick, 5); // left top bumper
 	Button lifterDownButtonA = new JoystickButton(operatorStick, 1);

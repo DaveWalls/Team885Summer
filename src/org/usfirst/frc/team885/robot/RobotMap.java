@@ -8,8 +8,8 @@ package org.usfirst.frc.team885.robot;
  */
 public class RobotMap {
 	public static class PWM {
-		public static final int rightDrive = 0;
-		public static final int leftDrive = 1;
+		public static final int rightDrive = 1;
+		public static final int leftDrive = 0;
 		public static final int scaler = 2;
 		public static final int gearIntake = 3;
 	}

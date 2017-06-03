@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Command> autoChooser;
 
 	UsbCamera camera1;
-	UsbCamera camera2;
+	// UsbCamera camera2;
 
 	@Override
 	public void robotInit() {
@@ -53,13 +53,15 @@ public class Robot extends IterativeRobot {
 
 		// Camera initialization: 2 cameras streaming to SmartDashboard
 
-		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-		camera1.setResolution(240, 180);
-		camera1.setFPS(45);
+//		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+		camera1 = new UsbCamera("cam0", 0);
+		camera1.setFPS(15);
+		camera1.setResolution(320, 180);
+		CameraServer.getInstance().startAutomaticCapture(camera1);
 
-		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-		camera2.setResolution(240, 180);
-		camera2.setFPS(45);
+//		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+//		camera2.setResolution(240, 180);
+//		camera2.setFPS(45);
 
 		DriverStation.reportWarning(DSMessaging.ENABLE_CAMERA, false);
 

@@ -14,11 +14,11 @@ public class GearCollector extends Subsystem {
 	private DoubleSolenoid piston = new DoubleSolenoid(RobotMap.Pneumatic.gearCollectorA, RobotMap.Pneumatic.gearCollectorB);
     
     public void pistonOut() {
-    	piston.set(DoubleSolenoid.Value.kForward);
+    	piston.set(DoubleSolenoid.Value.kReverse);
     }
     
     public void pistonIn() {
-    	piston.set(DoubleSolenoid.Value.kReverse);
+    	piston.set(DoubleSolenoid.Value.kForward);
     }
 
     public void updateDashboard() {
