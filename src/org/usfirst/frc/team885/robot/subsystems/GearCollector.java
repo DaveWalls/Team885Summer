@@ -24,7 +24,7 @@ public class GearCollector extends Subsystem {
     }
     
     public boolean isTriggered() {
-    	return !limitSwitch.get();
+    	return limitSwitch.get();
     }
 
     public void updateDashboard() {

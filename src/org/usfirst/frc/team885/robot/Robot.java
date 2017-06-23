@@ -53,11 +53,11 @@ public class Robot extends IterativeRobot {
 
 		// Camera initialization: 2 cameras streaming to SmartDashboard
 
-//		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-		camera1 = new UsbCamera("cam0", 0);
+		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+//		camera1 = new UsbCamera("cam0", 0);
 		camera1.setFPS(20);
 		camera1.setResolution(480, 360);
-		CameraServer.getInstance().startAutomaticCapture(camera1);
+//		CameraServer.getInstance().startAutomaticCapture(camera1);
 
 //		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
 //		camera2.setResolution(240, 180);
