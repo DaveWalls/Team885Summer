@@ -22,6 +22,7 @@ public class RobotMap {
 		public static final int feederDetector = 4;
 		public static final int gearSpearedDetector = 7;
 		public static final int gearStowedDetector = 8;
+		public static final int gearSwitch = 9;
 	}
 
 	public static class Pneumatic {

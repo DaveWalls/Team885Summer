@@ -55,8 +55,8 @@ public class Robot extends IterativeRobot {
 
 //		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
 		camera1 = new UsbCamera("cam0", 0);
-		camera1.setFPS(15);
-		camera1.setResolution(320, 180);
+		camera1.setFPS(20);
+		camera1.setResolution(480, 360);
 		CameraServer.getInstance().startAutomaticCapture(camera1);
 
 //		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
@@ -72,8 +72,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Cross baseline", new AutoBaseline());
 		autoChooser.addObject("Center Gear", new AutoCenterGear());
 		autoChooser.addObject("Drive 5ft PID", new TestDrivePIDDistance());
-		autoChooser.addObject("Right Gear", new AutoRightGear());
-		autoChooser.addObject("Left Gear", new AutoLeftGear());
+//		autoChooser.addObject("Right Gear", new AutoRightGear());
+//		autoChooser.addObject("Left Gear", new AutoLeftGear());
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 
 		SmartDashboard.putData(Scheduler.getInstance());

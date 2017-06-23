@@ -91,12 +91,19 @@ public class Chassis extends Subsystem {
     	drivetrain.arcadeDrive(joystick.getY() * forward, -joystick.getTwist() * turnFactor);
     }
     
+    public void teleopDriveTank(Joystick stickA, Joystick stickB) {
+    	drivetrain.tankDrive(-stickA.getY(), -stickB.getY());
+    }
+    
     // Drive with joystick, ignoring turning input
     public void teleopDriveStraight(Joystick joystick) {
     	drivetrain.arcadeDrive(joystick.getY() * forward, 0);
     }
     
-    // Drive robot straight at a set speed (for autonomous)
+    /**
+     * Drive robot straight at a set speed without PID control
+     * @param speed
+     */
     public void driveStraight(double speed) {
     	drivetrain.arcadeDrive(speed, 0);
     }
@@ -310,7 +317,8 @@ public class Chassis extends Subsystem {
 		public double pidGet() {
 			// Feed the PID loop the distance measured by the encoders
 			// I don't know why it's negative, it wasn't working otherwise
-			return -getAverageDistance();
+//			return -getAverageDistance();
+			return getLeftDistance();
 		}
     	
     }

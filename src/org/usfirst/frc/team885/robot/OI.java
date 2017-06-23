@@ -4,6 +4,7 @@ import org.usfirst.frc.team885.robot.commands.GearIn;
 import org.usfirst.frc.team885.robot.commands.GearOut;
 import org.usfirst.frc.team885.robot.commands.ScalerRun;
 import org.usfirst.frc.team885.robot.commands.ShifterSwitch;
+import org.usfirst.frc.team885.robot.subsystems.GearSwitch;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,11 +19,11 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 public class OI {
 
 	public static Joystick driverStick = new Joystick(0);
+//	public static Joystick driverStickB = new Joystick(1);
 	public static Joystick operatorStick = new Joystick(1);
 
 	// Driver controls
 	Button shifterSwitchButton = new JoystickButton(driverStick, 1);
-	Button gearOutButton = new JoystickButton(driverStick, 2); // driver thumb button
 
 	// Operator controls
 	POVButton lifterUpButtonA = new POVButton(operatorStick, 0);
@@ -30,6 +31,10 @@ public class OI {
 	Button lifterDownButtonA = new JoystickButton(operatorStick, 1);
 	Button lifterDownButtonB = new JoystickButton(operatorStick, 3);
 	DoubleButton lifterDownButton = new DoubleButton(lifterDownButtonA, lifterDownButtonB);
+	Button gearOutButton = new JoystickButton(operatorStick, 6); // right top bumper
+	
+	// Gear collector limit switch
+	Trigger gearSwitch = new GearSwitch();
 
 	public OI() {
 		super();
@@ -37,13 +42,15 @@ public class OI {
 		// Gear collector
 		gearOutButton.whenPressed(new GearOut());
 		gearOutButton.whenReleased(new GearIn());
+		gearSwitch.whenActive(new GearOut());
+		gearSwitch.whenInactive(new GearIn());
 		
 		// Toggle low/high gear
 		shifterSwitchButton.whenPressed(new ShifterSwitch());
 
 		// Run lifter (momentary)
 		lifterUpButtonA.whileActive(new ScalerRun(1.0));
-		lifterUpButtonA.whileActive(new ScalerRun(1.0));
+		lifterUpButtonB.whileActive(new ScalerRun(1.0));
 
 		// Run lifter in reverse (momentary)
 		lifterDownButton.whileActive(new ScalerRun(-0.5));
