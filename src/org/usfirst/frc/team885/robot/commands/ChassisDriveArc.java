@@ -3,55 +3,51 @@ package org.usfirst.frc.team885.robot.commands;
 import org.usfirst.frc.team885.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
- * Drive chassis along a curve (a circle segment) described by radius and arc length (not tested)
+ * Drive chassis along a curve (a circle segment) described by radius
  */
-public class ChassisDriveArc extends Command {
+public class ChassisDriveArc extends TimedCommand {
 	
-	private int distance; // Distance to drive, in inches
-	private double turnFactor; // used for internal calculations
-	private double startHeading;
+	double turnFactor, outsideSpeed, leftSpeed, rightSpeed;
 
     /**
      * @param distance The distance to drive, in inches
-     * @param radius The radius of the circle to turn along, in inches
+     * @param radius The radius of the circle to turn along, in inches (positive radius is clockwise)
      * @param speed Speed to drive at, 0 to 1
      */
-    public ChassisDriveArc(int distance, double radius) {
+    public ChassisDriveArc(int radius, double outsideSpeed, double timeout) {
+    	super(timeout);
         requires(Robot.chassis);
-        this.distance = distance;
-        this.turnFactor = 180.0 / Math.PI / radius;
+        this.turnFactor = radius / (radius * Robot.chassis.getTrack());
+        if(radius > 0) {
+        	leftSpeed = outsideSpeed;
+        	rightSpeed = turnFactor * outsideSpeed;
+        } else if (radius < 0) {
+        	rightSpeed = outsideSpeed;
+        	leftSpeed = outsideSpeed * turnFactor;
+        } else {
+        	leftSpeed = rightSpeed = outsideSpeed;
+        }
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	startHeading = Robot.chassis.getHeading();
-    	Robot.chassis.startDistancePID(distance);
-    	Robot.chassis.startHeadingPID(startHeading);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	// Repeatedly adjust heading
-    	Robot.chassis.setHeading(startHeading + Robot.chassis.getAverageDistance() * turnFactor);
-    }
-
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return Robot.chassis.atSetDistance();
+//    	Robot.chassis.directDrive(leftSpeed, rightSpeed);
+    	Robot.chassis.directDrive(8.0, 7.9);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.chassis.disableHeadingPID();
-    	Robot.chassis.disableDistancePID();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.chassis.disableHeadingPID();
-    	Robot.chassis.disableDistancePID();
     }
 }

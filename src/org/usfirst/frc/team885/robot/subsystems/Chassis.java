@@ -30,7 +30,7 @@ public class Chassis extends Subsystem {
 	
 	// Sensors
 	private Encoder leftEncoder = new Encoder(RobotMap.Digital.leftDriveEncoderA, RobotMap.Digital.leftDriveEncoderB);
-	private Encoder rightEncoder = new Encoder(RobotMap.Digital.rightDriveEncoderA, RobotMap.Digital.rightDriveEncoderB);
+//	private Encoder rightEncoder = new Encoder(RobotMap.Digital.rightDriveEncoderA, RobotMap.Digital.rightDriveEncoderB);
 	private AHRS navx = new AHRS(SPI.Port.kMXP);
 	
 	// Collision detection (not tested)
@@ -48,14 +48,20 @@ public class Chassis extends Subsystem {
     						//(used for switching front and back while driving)
     
     // Encoder calculations
-    private final double encoderCountsPerRev = 360.0; 				// Encoders' pulses per revolution
-    private final double driveSprocketRatio = 11.0 / 18.0; 			// Ratio of encoder sprocket to drive sprocket
-    private final double wheelCircumference = Math.PI;		// Just pi now
-    private final double empiricalCircumference = 4.141;	// Circumference as measured by driving the robot a set distance
-    private double distancePerPulse = driveSprocketRatio * wheelCircumference / encoderCountsPerRev * empiricalCircumference;
-    private final double track = 36.0; // Distance between centerlines of right and left wheels, in inches (not used)
+    // encoder should be rotating 7 times for every 1 drive wheel rotation
+    private final double encoderCountsPerRev = 128.0; 				// Encoders' pulses per revolution
+    private final double encoderRevsPerDriveRev = 1.0 / 7.0; 			// Ratio of encoder sprocket to drive sprocket
+    private final double empiricalDiameter = 6.5;	// Circumference as measured by driving the robot a set distance
+    private double distancePerPulse = encoderRevsPerDriveRev * Math.PI * empiricalDiameter / encoderCountsPerRev;
     
-    // Heading PID
+    // Arc drive calculations
+    private final double track = 22.0;
+    
+    public double getTrack() {
+		return track;
+	}
+
+	// Heading PID
     private HeadingPIDOutput headingPIDOut = new HeadingPIDOutput(); // Custom class to turn robot based on PID output
     private PIDController headingPID = new PIDController(0.04, 0.0, 0.0, navx, headingPIDOut);
     private final double heading_Kp = 0.8; // Limit on output of heading PID (0 to 1) to prevent oscillation
@@ -70,8 +76,8 @@ public class Chassis extends Subsystem {
     public Chassis() {
     	leftEncoder.setDistancePerPulse(distancePerPulse);
     	leftEncoder.setReverseDirection(true); // One of the encoders must measure in reverse
-    	rightEncoder.setDistancePerPulse(distancePerPulse);
-    	rightEncoder.setReverseDirection(false);
+//    	rightEncoder.setDistancePerPulse(distancePerPulse);
+//    	rightEncoder.setReverseDirection(false);
     	
     	headingPID.setInputRange(-180.0f, 180.0f); // navx will only give headings from -180 to 180
     	headingPID.setOutputRange(-heading_Kp, heading_Kp); // Restrict output
@@ -146,9 +152,9 @@ public class Chassis extends Subsystem {
     }
     
     // Get distance measured by right encoder (inches)
-    public double getRightDistance() {
-		return rightEncoder.getDistance();
-	}
+//    public double getRightDistance() {
+//		return rightEncoder.getDistance();
+//	}
 	
     // Get distance measured by left encoder (inches)
 	public double getLeftDistance() {
@@ -157,7 +163,8 @@ public class Chassis extends Subsystem {
 	
 	// Get average of both encoders
 	public double getAverageDistance() {
-		return (getRightDistance() + getLeftDistance()) / 2.0;
+//		return (getRightDistance() + getLeftDistance()) / 2.0;
+		return getLeftDistance();
 	}
 	
 	// Not used currently--would allow for turning a set angle using encoders, not navx
@@ -167,7 +174,8 @@ public class Chassis extends Subsystem {
 	
 	// Get speed as measured by encoders in inches per second
 	public double getSpeed() {
-		return (rightEncoder.getRate() + leftEncoder.getRate()) / 2;
+//		return (rightEncoder.getRate() + leftEncoder.getRate()) / 2;
+		return leftEncoder.getRate();
 	}
 	
 	// Not tested
@@ -233,7 +241,7 @@ public class Chassis extends Subsystem {
 	// Zero the encoder readouts
 	public void resetEncoders() {
 		leftEncoder.reset();
-		rightEncoder.reset();
+//		rightEncoder.reset();
 	}
 	
 	public void enableDistancePID() {
@@ -269,7 +277,7 @@ public class Chassis extends Subsystem {
     	SmartDashboard.putNumber("Left Drive", leftDrive.get());
     	SmartDashboard.putNumber("Right Drive", rightDrive.get());
     	SmartDashboard.putNumber("Left Encoder", getLeftDistance());
-    	SmartDashboard.putNumber("Right Encoder", getRightDistance());
+//    	SmartDashboard.putNumber("Right Encoder", getRightDistance());
     	SmartDashboard.putNumber("Average of encoders", getAverageDistance());
     	SmartDashboard.putNumber("Speed", Math.abs(getSpeed() / 12.0));
     	SmartDashboard.putBoolean("Gear collector is forwards", forward == -1);

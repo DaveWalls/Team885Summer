@@ -5,6 +5,7 @@ import org.usfirst.frc.team885.robot.commandgroups.AutoCenterGear;
 import org.usfirst.frc.team885.robot.commandgroups.AutoDoNothing;
 import org.usfirst.frc.team885.robot.commandgroups.AutoLeftGear;
 import org.usfirst.frc.team885.robot.commandgroups.AutoRightGear;
+import org.usfirst.frc.team885.robot.commandgroups.TestDriveArc;
 import org.usfirst.frc.team885.robot.commandgroups.TestDrivePIDDistance;
 import org.usfirst.frc.team885.robot.commands.ShifterSetLow;
 import org.usfirst.frc.team885.robot.subsystems.Chassis;
@@ -72,6 +73,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Cross baseline", new AutoBaseline());
 		autoChooser.addObject("Center Gear", new AutoCenterGear());
 		autoChooser.addObject("Drive 5ft PID", new TestDrivePIDDistance());
+		autoChooser.addObject("Drive arc test", new TestDriveArc());
 //		autoChooser.addObject("Right Gear", new AutoRightGear());
 //		autoChooser.addObject("Left Gear", new AutoLeftGear());
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
