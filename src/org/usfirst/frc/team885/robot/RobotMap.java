@@ -15,11 +15,12 @@ public class RobotMap {
 	}
 
 	public static class Digital {
-		public static final int leftDriveEncoderA = 0;
-		public static final int leftDriveEncoderB = 1;
+		public static final int leftDriveEncoderA = 4;
+		public static final int leftDriveEncoderB = 5;
 		public static final int rightDriveEncoderA = 2;
 		public static final int rightDriveEncoderB = 3;
-		public static final int feederDetector = 4;
+//
+//		public static final int feederDetector = 4;
 		public static final int gearSpearedDetector = 7;
 		public static final int gearStowedDetector = 8;
 		public static final int gearSwitch = 9;
@@ -30,5 +31,7 @@ public class RobotMap {
 		public static final int shifterB = 1;
 		public static final int gearCollectorA = 2;
 		public static final int gearCollectorB = 3;
+//		public static final int gearFlapA = 4;
+//		public static final int gearFlapB = 5;
 	}
 }

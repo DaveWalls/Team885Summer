@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
  *
  */
 public class GearSwitch extends Trigger {
-
+  
     public boolean get() {
         return !Robot.gearCollector.isTriggered();
     }

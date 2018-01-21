@@ -15,6 +15,7 @@ public class ChassisPIDDriveDistance extends Command {
     public ChassisPIDDriveDistance(int inches) {
     	requires(Robot.chassis);
     	this.inches = inches;
+    	
     }
 
     // Called just before this Command runs the first time

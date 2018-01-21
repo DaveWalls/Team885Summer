@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ChassisDriveDistanceTimeout extends Command {
 
-	private int inches;
+	private double inches;
 	private double speed, timeout;
-	private Timer timer;
+//	private Timer timer;
     
-    public ChassisDriveDistanceTimeout(int inches, double speed, double timeout) {
+    public ChassisDriveDistanceTimeout(double inches, double speed, double timeout) {
     	requires(Robot.chassis);
     	this.inches = inches;
     	this.speed = speed;
     	this.timeout = timeout;
-    	timer = new Timer();
+    	
     	speed *= Math.signum(inches);
     }
 
@@ -28,7 +28,7 @@ public class ChassisDriveDistanceTimeout extends Command {
     protected void initialize() {
     	Robot.chassis.resetEncoders();
     	Robot.chassis.startHeadingPIDReset(0.0);
-    	timer.start();
+   // 	timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,19 +38,19 @@ public class ChassisDriveDistanceTimeout extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(Robot.chassis.getAverageDistance()) >= Math.abs(inches) || timer.get() > timeout;
+        return Math.abs(Robot.chassis.getAverageDistance()) >= Math.abs(inches);// || timer.get() >// timeout;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.chassis.disableHeadingPID();
-    	timer.stop();
+  //  	timer.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	Robot.chassis.disableHeadingPID();
-    	timer.stop();
+  //  	timer.stop();
     }
 }

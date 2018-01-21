@@ -1,5 +1,7 @@
 package org.usfirst.frc.team885.robot;
 
+//import org.usfirst.frc.team885.robot.commands.FlapIn;
+//import org.usfirst.frc.team885.robot.commands.FlapOut;
 import org.usfirst.frc.team885.robot.commands.GearIn;
 import org.usfirst.frc.team885.robot.commands.GearOut;
 import org.usfirst.frc.team885.robot.commands.ScalerRun;
@@ -24,14 +26,21 @@ public class OI {
 
 	// Driver controls
 	Button shifterSwitchButton = new JoystickButton(driverStick, 1);
+	Button gearOutButtonA = new JoystickButton(driverStick, 4);
+	Button gearInButtonA = new JoystickButton(driverStick, 3);
+
 
 	// Operator controls
 	POVButton lifterUpButtonA = new POVButton(operatorStick, 0);
-	Button lifterUpButtonB = new JoystickButton(operatorStick, 5); // left top bumper
+	Button lifterUpButtonB = new JoystickButton(driverStick, 5); // left top bumper
 	Button lifterDownButtonA = new JoystickButton(operatorStick, 1);
 	Button lifterDownButtonB = new JoystickButton(operatorStick, 3);
 	DoubleButton lifterDownButton = new DoubleButton(lifterDownButtonA, lifterDownButtonB);
 	Button gearOutButton = new JoystickButton(operatorStick, 6); // right top bumper
+	Button gearInButton = new JoystickButton(operatorStick, 8); // right bottom bumper
+	Button flapOutButton = new JoystickButton(operatorStick, 4);
+	Button flapInButton = new JoystickButton(operatorStick, 2);
+//	Button shifterSwitchButton = new JoystickButton(operatorStick, 8);
 	
 	// Gear collector limit switch
 	Trigger gearSwitch = new GearSwitch();
@@ -40,10 +49,20 @@ public class OI {
 		super();
 
 		// Gear collector
-		gearOutButton.whenPressed(new GearOut());
-		gearOutButton.whenReleased(new GearIn());
+//		gearOutButton.whenPressed(new GearOut());
+//		gearOutButton.whenReleased(new GearIn());
 		gearSwitch.whenActive(new GearOut());
 		gearSwitch.whenInactive(new GearIn());
+		gearOutButton.whenPressed(new GearOut());
+		gearInButton.whenPressed(new GearIn());
+		
+		gearOutButtonA.whenPressed(new GearOut());
+		gearInButtonA.whenPressed(new GearIn());
+		
+		// Gear flap
+//		flapOutButton.whenPressed(new FlapOut());
+//		flapInButton.whenPressed(new FlapIn());
+		
 		
 		// Toggle low/high gear
 		shifterSwitchButton.whenPressed(new ShifterSwitch());

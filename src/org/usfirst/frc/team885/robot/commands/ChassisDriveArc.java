@@ -39,7 +39,7 @@ public class ChassisDriveArc extends TimedCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 //    	Robot.chassis.directDrive(leftSpeed, rightSpeed);
-    	Robot.chassis.directDrive(8.0, 7.9);
+    	Robot.chassis.directDrive(7.9, 8);
     }
 
     // Called once after isFinished returns true

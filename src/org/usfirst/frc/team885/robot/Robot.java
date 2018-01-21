@@ -1,15 +1,27 @@
 package org.usfirst.frc.team885.robot;
 
 import org.usfirst.frc.team885.robot.commandgroups.AutoBaseline;
+import org.usfirst.frc.team885.robot.commandgroups.AutoBlueBoilerGear;
 import org.usfirst.frc.team885.robot.commandgroups.AutoCenterGear;
+import org.usfirst.frc.team885.robot.commandgroups.AutoCenterGear2;
+import org.usfirst.frc.team885.robot.commandgroups.AutoCenterGearRed;
 import org.usfirst.frc.team885.robot.commandgroups.AutoDoNothing;
 import org.usfirst.frc.team885.robot.commandgroups.AutoLeftGear;
+import org.usfirst.frc.team885.robot.commandgroups.AutoLeftGearBlue;
+import org.usfirst.frc.team885.robot.commandgroups.AutoLeftGearRed;
+import org.usfirst.frc.team885.robot.commandgroups.AutoRedBoiler;
 import org.usfirst.frc.team885.robot.commandgroups.AutoRightGear;
+import org.usfirst.frc.team885.robot.commandgroups.AutoRightGearBlue;
+import org.usfirst.frc.team885.robot.commandgroups.AutoRightGearBlue2;
+import org.usfirst.frc.team885.robot.commandgroups.AutoRightGearRed;
+import org.usfirst.frc.team885.robot.commandgroups.AutoRightGearRed2;
 import org.usfirst.frc.team885.robot.commandgroups.TestDriveArc;
 import org.usfirst.frc.team885.robot.commandgroups.TestDrivePIDDistance;
+import org.usfirst.frc.team885.robot.commandgroups.TestDrivePIDDistance2;
 import org.usfirst.frc.team885.robot.commands.ShifterSetLow;
 import org.usfirst.frc.team885.robot.subsystems.Chassis;
 import org.usfirst.frc.team885.robot.subsystems.GearCollector;
+//import org.usfirst.frc.team885.robot.subsystems.GearFlap;
 import org.usfirst.frc.team885.robot.subsystems.Scaler;
 import org.usfirst.frc.team885.robot.subsystems.Shifter;
 
@@ -36,6 +48,7 @@ public class Robot extends IterativeRobot {
 	public static GearCollector gearCollector;
 	public static Scaler scaler;
 	public static Shifter shifter;
+//	public static GearFlap gearFlap;
 
 	public static OI oi;
 
@@ -51,15 +64,16 @@ public class Robot extends IterativeRobot {
 		gearCollector = new GearCollector();
 		scaler = new Scaler();
 		shifter = new Shifter();
+//		gearFlap = new GearFlap();
 
 		// Camera initialization: 2 cameras streaming to SmartDashboard
 
 		camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-//		camera1 = new UsbCamera("cam0", 0);
-		camera1.setFPS(20);
-		camera1.setResolution(480, 360);
-//		CameraServer.getInstance().startAutomaticCapture(camera1);
-
+		camera1.setFPS(25);
+		camera1.setResolution(320,180);
+	
+//		CameraServer.getInstance().startAutomaticCapture(0);
+		
 //		camera2 = CameraServer.getInstance().startAutomaticCapture(1);
 //		camera2.setResolution(240, 180);
 //		camera2.setFPS(45);
@@ -69,14 +83,38 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		autoChooser = new SendableChooser<Command>();
+
+		autoChooser.addObject("Red Left", new AutoLeftGearRed());
+//		autoChooser.addObject("Red Right", new AutoRightGearRed());
+		autoChooser.addObject("Red Right Anti 1519", new AutoRedBoiler());
+		autoChooser.addObject("Red Right 2", new AutoRightGearRed2());
+		
+//		autoChooser.addObject("Blue Left", new AutoLeftGearBlue());
+		autoChooser.addObject("Blue Right", new AutoRightGearBlue());
+		autoChooser.addObject("Blue Left Anti 1519", new AutoBlueBoilerGear());
+//		autoChooser.addObject("Blue Right 2", new AutoRightGearBlue2());
+
+		autoChooser.addObject("Center Gear 2", new AutoCenterGear2());
+		autoChooser.addObject("Center Gear 2 Red", new AutoCenterGearRed());
+//		autoChooser.addObject("Right Gear", new AutoRightGear());
+//		autoChooser.addObject("Left Gear", new AutoLeftGear());
 		autoChooser.addDefault("Do nothing", new AutoDoNothing());
 		autoChooser.addObject("Cross baseline", new AutoBaseline());
 		autoChooser.addObject("Center Gear", new AutoCenterGear());
-		autoChooser.addObject("Drive 5ft PID", new TestDrivePIDDistance());
-		autoChooser.addObject("Drive arc test", new TestDriveArc());
-//		autoChooser.addObject("Right Gear", new AutoRightGear());
-//		autoChooser.addObject("Left Gear", new AutoLeftGear());
+		autoChooser.addObject("Drive 15ft PID", new TestDrivePIDDistance2());
+//		autoChooser.addObject("Drive arc test", new TestDriveArc());
 		SmartDashboard.putData("Autonomous mode chooser", autoChooser);
+		
+		
+//		autoChooser = new SendableChooser<Command>();
+	//	autoChooser.addDefault("Do nothing", new AutoDoNothing());
+	//	autoChooser.addObject("Cross baseline", new AutoBaseline());
+	//	autoChooser.addObject("Center Gear", new AutoCenterGear());
+	///	autoChooser.addObject("Drive 5ft PID", new TestDrivePIDDistance());
+	//	autoChooser.addObject("Drive arc test", new TestDriveArc());
+	//	autoChooser.addObject("Right Gear", new AutoRightGear());
+	//	autoChooser.addObject("Left Gear", new AutoLeftGear());
+	//	SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 
 		SmartDashboard.putData(Scheduler.getInstance());
 		DriverStation.reportWarning(DSMessaging.ROBOT_INIT, false);

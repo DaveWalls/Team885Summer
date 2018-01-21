@@ -30,7 +30,7 @@ public class Chassis extends Subsystem {
 	
 	// Sensors
 	private Encoder leftEncoder = new Encoder(RobotMap.Digital.leftDriveEncoderA, RobotMap.Digital.leftDriveEncoderB);
-//	private Encoder rightEncoder = new Encoder(RobotMap.Digital.rightDriveEncoderA, RobotMap.Digital.rightDriveEncoderB);
+	private Encoder rightEncoder = new Encoder(RobotMap.Digital.rightDriveEncoderA, RobotMap.Digital.rightDriveEncoderB);
 	private AHRS navx = new AHRS(SPI.Port.kMXP);
 	
 	// Collision detection (not tested)
@@ -49,9 +49,9 @@ public class Chassis extends Subsystem {
     
     // Encoder calculations
     // encoder should be rotating 7 times for every 1 drive wheel rotation
-    private final double encoderCountsPerRev = 128.0; 				// Encoders' pulses per revolution
-    private final double encoderRevsPerDriveRev = 1.0 / 7.0; 			// Ratio of encoder sprocket to drive sprocket
-    private final double empiricalDiameter = 6.5;	// Circumference as measured by driving the robot a set distance
+    private final double encoderCountsPerRev = 256.0; 				// Encoders' pulses per revolution
+    private final double encoderRevsPerDriveRev = 1 / 5.5 ; 			// Ratio of encoder sprocket to drive sprocket
+    private final double empiricalDiameter = 6.125;	// Circumference as measured by driving the robot a set distance
     private double distancePerPulse = encoderRevsPerDriveRev * Math.PI * empiricalDiameter / encoderCountsPerRev;
     
     // Arc drive calculations
@@ -59,6 +59,7 @@ public class Chassis extends Subsystem {
     
     public double getTrack() {
 		return track;
+		
 	}
 
 	// Heading PID
@@ -76,8 +77,8 @@ public class Chassis extends Subsystem {
     public Chassis() {
     	leftEncoder.setDistancePerPulse(distancePerPulse);
     	leftEncoder.setReverseDirection(true); // One of the encoders must measure in reverse
-//    	rightEncoder.setDistancePerPulse(distancePerPulse);
-//    	rightEncoder.setReverseDirection(false);
+    	rightEncoder.setDistancePerPulse(distancePerPulse);
+    	rightEncoder.setReverseDirection(false);
     	
     	headingPID.setInputRange(-180.0f, 180.0f); // navx will only give headings from -180 to 180
     	headingPID.setOutputRange(-heading_Kp, heading_Kp); // Restrict output
@@ -152,9 +153,9 @@ public class Chassis extends Subsystem {
     }
     
     // Get distance measured by right encoder (inches)
-//    public double getRightDistance() {
-//		return rightEncoder.getDistance();
-//	}
+    	public double getRightDistance() {
+		return rightEncoder.getDistance();
+	}
 	
     // Get distance measured by left encoder (inches)
 	public double getLeftDistance() {
@@ -162,9 +163,8 @@ public class Chassis extends Subsystem {
 	}
 	
 	// Get average of both encoders
-	public double getAverageDistance() {
-//		return (getRightDistance() + getLeftDistance()) / 2.0;
-		return getLeftDistance();
+		public double getAverageDistance() {
+		return (getRightDistance() + getLeftDistance()) / 2.0;
 	}
 	
 	// Not used currently--would allow for turning a set angle using encoders, not navx
@@ -241,7 +241,7 @@ public class Chassis extends Subsystem {
 	// Zero the encoder readouts
 	public void resetEncoders() {
 		leftEncoder.reset();
-//		rightEncoder.reset();
+		rightEncoder.reset();
 	}
 	
 	public void enableDistancePID() {
@@ -277,7 +277,7 @@ public class Chassis extends Subsystem {
     	SmartDashboard.putNumber("Left Drive", leftDrive.get());
     	SmartDashboard.putNumber("Right Drive", rightDrive.get());
     	SmartDashboard.putNumber("Left Encoder", getLeftDistance());
-//    	SmartDashboard.putNumber("Right Encoder", getRightDistance());
+    	SmartDashboard.putNumber("Right Encoder", getRightDistance());
     	SmartDashboard.putNumber("Average of encoders", getAverageDistance());
     	SmartDashboard.putNumber("Speed", Math.abs(getSpeed() / 12.0));
     	SmartDashboard.putBoolean("Gear collector is forwards", forward == -1);
@@ -286,7 +286,12 @@ public class Chassis extends Subsystem {
     	SmartDashboard.putData(this);
     }
 
-    // Chassis defaults to ChassisTeleop when no other command is controlling it
+ //   private double getRightDistance() {
+		// TODO Auto-generated method stub
+//		return 0;
+//	}
+
+	// Chassis defaults to ChassisTeleop when no other command is controlling it
     public void initDefaultCommand() {
         setDefaultCommand(new ChassisTeleop());
     }
